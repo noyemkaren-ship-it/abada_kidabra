@@ -24,11 +24,11 @@ async def add_headers(request, call_next):
     response.headers["Content-Security-Policy"] = "default-src 'self'"
     return response
 
-@app.get("/")
+@app.get("/", tags=["page"])
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/books/page")
+@app.get("/books/page", tags=["page"])
 async def get_books(request: Request):
     books = get_all_books()
     return templates.TemplateResponse("index.html", {"request": request, "books": books})
