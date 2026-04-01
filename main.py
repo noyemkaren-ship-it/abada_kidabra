@@ -3,7 +3,6 @@ from fastapi.templating import Jinja2Templates
 from router.book_router import book_router
 from router.category_router import cat_router
 from services.books_services import get_all_books
-from fastapi.middleware.trustedhost import TrustedHostMiddlewareы
 
 
 app = FastAPI(
