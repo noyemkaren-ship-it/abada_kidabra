@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотека | Список книг</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .book-count {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .books-list {
+            padding: 20px;
+        }
+
+        .book-item {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .book-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .book-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .book-title::before {
+            content: "📖";
+            font-size: 1.2em;
+        }
+
+        .book-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .detail.author::before {
+            content: "✍️";
+        }
+
+        .detail.year::before {
+            content: "📅";
+        }
+
+        .detail.price::before {
+            content: "💰";
+        }
+
+        .detail.category::before {
+            content: "🏷️";
+        }
+
+        .price-value {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state .emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .book-title {
+                font-size: 1.1em;
+            }
+            
+            .book-details {
+                gap: 8px;
+            }
+            
+            .detail {
+                font-size: 0.8em;
+                padding: 4px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Библиотека книг</h1>
+            <p>Ваша персональная коллекция</p>
+            {% if books %}
+            <div class="book-count">
+                Всего книг: {{ books|length }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="books-list">
+            {% if books %}
+                {% for book in books %}
+                <div class="book-item">
+                    <div class="book-title">{{ book.name }}</div>
+                    <div class="book-details">
+                        <span class="detail author">{{ book.author }}</span>
+                        <span class="detail year">{{ book.yer }} г.</span>
+                        <span class="detail price"><span class="price-value">{{ book.price }}</span> руб.</span>
+                        <span class="detail category">{{ book.category }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="emoji">📭</div>
+                    <h3>Пока нет книг</h3>
+                    <p>Добавьте первую книгу в библиотеку</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="footer">
+            <span>📖 Чтение — лучшее учение</span>
+        </div>
+    </div>
+</body>
+</html>
