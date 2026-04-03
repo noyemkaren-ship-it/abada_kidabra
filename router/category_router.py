@@ -13,12 +13,14 @@ async def get_categories():
     return result
 
 @cat_router.post("/categories", tags=["category_CRUD"])
+@limiter.limit("5/minute")
 async def create_category_create(category: CategoryCreate):
     result = create_category(category.name)
     return result
 
 
 @cat_router.delete("/categories/{id}", tags=["category_CRUD"])
+@limiter.limit("5/minute")
 async def delete_category(id: int):
     result = delete_category_by_id(id=id)
     if result:
