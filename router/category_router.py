@@ -3,6 +3,8 @@ from services.category_services import get_all_categories, create_category, dele
 from schemas.category import CategoryCreate
 from slowapi import Limiter,  _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
+from fastapi import Request
+
 limiter = Limiter(key_func=get_remote_address)
 
 cat_router = APIRouter()
@@ -14,14 +16,14 @@ async def get_categories():
 
 @cat_router.post("/categories", tags=["category_CRUD"])
 @limiter.limit("5/minute")
-async def create_category_create(category: CategoryCreate):
+async def create_category_create(request: Request, category: CategoryCreate):
     result = create_category(category.name)
     return result
 
 
 @cat_router.delete("/categories/{id}", tags=["category_CRUD"])
 @limiter.limit("5/minute")
-async def delete_category(id: int):
+async def delete_category(request: Request, id: int):
     result = delete_category_by_id(id=id)
     if result:
         return {"message": "Category deleted"}
