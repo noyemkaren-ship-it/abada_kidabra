@@ -4,7 +4,6 @@ from router.book_router import book_router
 from router.category_router import cat_router
 from services.books_services import get_all_books
 
-
 app = FastAPI(
     docs_url="/secret-docs-2025",
     redoc_url="/secret-redoc-2025"

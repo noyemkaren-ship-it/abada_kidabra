@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from services.category_services import get_all_categories, create_category, delete_category_by_id
 from schemas.category import CategoryCreate
-
+from slowapi import Limiter,  _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+limiter = Limiter(key_func=get_remote_address)
 
 cat_router = APIRouter()
 
